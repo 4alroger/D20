@@ -1,0 +1,39 @@
+{% extends 'flatpages/default.html' %}
+
+<html>
+<head>
+<title>{% block title %}Объявление{% endblock title %}</title>
+</head>
+<body>
+{% block content %}
+<h1>Моё объявление</h1>
+<h2>{{ post_user.post_title }}</h2>
+<h2>{{ post_user.post_text }}</h2>
+<h3>{{ post_user.time_create|date:'H:m d M Y' }}</h3>
+<br>
+<a href="{% url 'post_delete' post_user.id %}">Удалить объявление</a>
+<br>
+<a href="{% url 'post_update' post_user.id %}">Редактировать объявление</a>
+<br>
+<h2>Отклики:</h2>
+{% if comments %}
+   <table class="table table-bordered">
+       <tr>
+           <td>Текст</td>
+           <td>Дата создания</td>
+           <td>Автор</td>
+       </tr>
+       {% for r in comments %}
+       <tr>
+           <td>{{ r.reply_text }}</td>
+           <td>{{ r.time_create|date:'H:m d M Y' }}</td>
+           <td>{{ r.user }}</td>
+       </tr>
+       {% endfor %}
+   </table>
+{% else %}
+   <h2>Откликов нет!</h2>
+{% endif %}
+{% endblock content %}
+</body>
+</html>
